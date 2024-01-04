@@ -1,0 +1,76 @@
+import { useNavigate } from 'react-router-dom'
+import { useForm } from "react-hook-form"
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
+
+import { Button } from '../../components/Button'
+import { Header } from '../../components/Header'
+import { Input } from '../../components/Input'
+
+import { api } from '../../services/api'
+
+import { Column, Container, EsqueciText, CriarText, Row, Title, TitleLogin, Wrapper, SubTitleLogin } from './styles'
+
+const schema = Yup.object({
+    email: Yup.string().email('Digite um e-mail válido').required('Este campo é obrigatório'),
+    password: Yup.string().min(3, 'minimo de 3 caracteres').required()
+}).required()
+
+const Login = () => {
+
+    const navigate = useNavigate()
+
+    const { control, handleSubmit, formState: { errors }} = useForm({
+        resolver: yupResolver(schema),
+        mode: 'onChange',
+    })
+
+    const onSubmit = async formData => {
+        try{
+            const { data } = await api.get(`users?email=${formData.email}&senha=${formData.password}`)
+            if( data.length === 1 ){
+                navigate('/feed')
+                
+            }else{
+                alert('email ou senha inválido')
+                console.log(data)
+            }
+        }catch{
+            alert("Falha no login")
+        }
+    }
+
+    return (
+        <div>
+            <Header/>
+            <Container>
+                <Column>
+                    <Title>
+                        A plataforma para você aprender com experts, dominar as principas tecnologias e entrar mais rápido nas empresas mais desejadas.
+                    </Title>
+                </Column>
+                <Column>
+                    <Wrapper>
+                        <TitleLogin>
+                            Acesse a sua conta
+                        </TitleLogin>
+                        <SubTitleLogin>
+                            Faça seu Login e make the change._
+                        </SubTitleLogin>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <Input name="email" errorMessage={errors?.email?.message} control={control} placeholder='E-mail'/>
+                            <Input name="password" errorMessage={errors?.password?.message} control={control} placeholder='Senha' type='password'/>
+                            <Button title="Entrar" variant='secondary' type="submit" />
+                        </form>
+                        <Row>
+                            <EsqueciText>Esqueci minha senha</EsqueciText>
+                            <CriarText href='http://localhost:3000/cadastro'>criar conta</CriarText>
+                        </Row>
+                    </Wrapper>
+                </Column>
+            </Container>
+        </div>
+    )
+}
+
+export { Login }
