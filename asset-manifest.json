@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/dioclone/static/js/main.2753eea6.js",
+    "static/media/banner.png": "/dioclone/static/media/banner.9ab4ead1c68ede88f1ce.png",
+    "static/media/logodio.png": "/dioclone/static/media/logodio.5809debb1e27ff86dcec.png",
+    "index.html": "/dioclone/index.html",
+    "main.2753eea6.js.map": "/dioclone/static/js/main.2753eea6.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.2753eea6.js"
+  ]
+}
