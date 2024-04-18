@@ -12,7 +12,7 @@ function App() {
         <AuthContextProvider>
           <Routes>
             <Route 
-              path='/' 
+              path='/dioclone' 
               element={
                 <Home/>
               }/>
